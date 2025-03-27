@@ -116,9 +116,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+# dev_2
+# 스태틱(static) 디렉토리
+# URL 상의 스태틱 폴더를, 로컬(내컴퓨터)의 파일 폴더와 매칭시키는 부분
+# http://127.0.0.1:8000/static/
+
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# dev_2
+# 미디어 파일 경로 설정
+import os
+
+# dev_2
+# http://127.0.0.1:8000/media/파일경로
+MEDIA_URL = "media/"  # ex) /media/photo1.png
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
