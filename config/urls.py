@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("store.urls")), # dev_1
+    path('accounts/', include('accounts.urls', namespace='accounts')),  # ✅ 이 줄이 꼭 필요!
+
 ]
 
 # dev_2
