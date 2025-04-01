@@ -29,3 +29,27 @@ def login_user(request):
     else:
         return render(request, 'accounts/login.html')
     
+# dev_10
+def register_user(request):
+    
+    form = RegisterUserForm()
+    
+    if request.method == "POST":
+        # username = request.POST.get("username","") # 이게 더 안전
+        username = request.POST["username"]
+        password = request.POST["password"]
+        
+        user = authenticate(request, username=username,password=password)
+        
+        if user is not None:
+            login(request,user)
+            messages.success(request, '로그인이 되었습니다.')
+            return redirect("/")
+        else:
+            messages.success(request, '로그인이 실패하였습니다. 다시 한번 더 시도해주시기 바랍니다.')
+            return redirect("accounts:login_user")
+        
+        
+    else:
+        return render(request, 'accounts/login.html')
+    
