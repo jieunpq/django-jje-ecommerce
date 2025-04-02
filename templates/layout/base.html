@@ -1,22 +1,10 @@
-{% load static %}
-{% load humanize %}
+{% load static %} {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
-    {% block head %}{% endblock head %}
-    <body>
-        {% block navbar %}
-        {% endblock navbar %}
-        {% block header %}
-        {% endblock header %}
-        <!-- 기본 템플릿 안에 삽입될 내용 Start -->
-        {% block content %}
-        {% endblock content %}
-        <!-- 기본 템플릿 안에 삽입될 내용 End -->
-        {% block footer %}
-        {% endblock footer %}
-        <!--  자바 스크립트 Start -->
-        {% block script %}
-        {% endblock script %}
-        <!--  자바 스크립트 End -->
-    </body>
+	<head>
+		{% block head %} {% include "layout/head.html" %} {% endblock head %}
+	</head>
+	<body>
+		{% block navbar %} {% include "layout/navbar.html" %} {% endblock navbar %} {% block header %}{% endblock header %} {% block content %}{% endblock content %} {% block footer %} {% include "layout/footer.html" %} {% endblock footer %} {% block script %}{% endblock script %}
+	</body>
 </html>
