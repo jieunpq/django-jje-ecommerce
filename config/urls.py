@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("store.urls")), # dev_1
     path('accounts/', include('accounts.urls', namespace='accounts')),  # ✅ 이 줄이 꼭 필요!
-
+    path('cart/', include("cart.urls")), # dev_15
 ]
 
 # dev_2

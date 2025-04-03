@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "django.contrib.humanize",  # dev_5 쉼표(,)를 추가하여 통화 형식(₩1,000,000)으로 변환하는 방법
     'store', #dev_1
-    'accounts'
+    'accounts', #dev_9
+    'cart', #dev_15
+    
 ]
 
 MIDDLEWARE = [
@@ -151,3 +153,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # dev_9
 # 다시 한번 migrate 시켜줘야함
 AUTH_USER_MODEL = "accounts.User"
+
+#dev_15
+CART_SESSION_ID = "cart"

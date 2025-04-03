@@ -18,8 +18,10 @@
 				<p class="lead">{{ product.description }}</p>
 				<div class="d-flex">
 					<input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-					<button class="btn btn-outline-dark flex-shrink-0" type="button">
+					<!--dev_15-->
+					<button class="btn btn-outline-dark flex-shrink-0" type="button" value="{{ product.id }}" id="add-cart">
 						<i class="bi-cart-fill me-1"></i>
+						<!--dev_15-->
 						Add to cart
 					</button>
 				</div>
@@ -29,4 +31,26 @@
 		</div>
 	</div>
 </section>
-{% endblock content %} {% block footer %} {% include "layout/footer.html" %} {% endblock footer %}
+{% endblock content %} {% block footer %} {% include "layout/footer.html" %} {% endblock footer %} {% block script %}
+<script>
+	$(document).on('click','#add-cart',function(e){
+		$.ajax({
+			type: "post",
+			url: "{% url "cart:add_cart" %}",
+			data:{
+				product_id:$("#add-cart").val(),
+				product_qty:$("#inputQuantity").val(),
+				csrfmiddlewaretoken:'{{  csrf_token }}',
+				action: "post"
+			},
+			success:function(json){
+				console.log(json)
+				$('#cart_quantity'.text(json.qty))
+			},
+			error:function(e){
+				console.log(e)
+			}
+		});
+	});
+</script>
+{% endblock script %}
