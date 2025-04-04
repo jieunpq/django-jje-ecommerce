@@ -46,6 +46,8 @@
 			success:function(json){
 				console.log(json)
 				$('#cart_quantity').text(json.qty)
+				// dev_16
+				// location.reload();
 			},
 			error:function(e){
 				console.log(e)

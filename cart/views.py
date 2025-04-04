@@ -24,7 +24,9 @@ def add_cart(request):
             
             # 카트 전체 개수 가져오기
             cart_qty = cart.__len__()
-            cart.decrypt_all_sessions()
+            
+            # 세션 확인 테스트
+            # cart.decrypt_all_sessions()
 
             return JsonResponse({
                 "message": "장바구니에 추가되었습니다.",
