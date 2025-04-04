@@ -21,8 +21,7 @@
 					<center>
 						<h5 class="card-title">{{ item.product.name }}</h5>
 						<p class="card-text">{{ item.product.description }}</p>
-						{% if item.product.is_sale %} 
-                        {% comment %}
+						{% if item.product.is_sale %} {% comment %}
 						<div class="d-flex justify-content-center small text-warning mb-2">
 							<div class="bi-star-fill"></div>
 							<div class="bi-star-fill"></div>
@@ -35,9 +34,7 @@
 						<br />
 						ID :&nbsp;{{ product.id }}
 						<br />
-						&nbsp;${{ product.sale_price }} 
-                        {% endcomment %}
-                        ${{ item.product.price }}
+						&nbsp;${{ product.sale_price }} {% endcomment %} ${{ item.product.price }}
 						<br />
 						ID : {{ item.product.id }} {% else %} ${{ item.product.price }}
 						<br />
@@ -62,4 +59,29 @@
 	<h1>장바구니에 물품이 없습니다.</h1>
 	{% endif %}
 </div>
-{% endblock content %} {% block footer %} {% include "layout/footer.html" %} {% endblock footer %}
+{% endblock content %} {% block footer %} {% include "layout/footer.html" %} {% endblock footer %} {% block script %}
+<script>
+	$(document).on('click','#add-cart',function(e){
+		$.ajax({
+			type: "post",
+			url: "{% url "cart:add_cart" %}",
+			data:{
+				product_id:$("#add-cart").val(),
+				product_qty:$("#inputQuantity").val(),
+				csrfmiddlewaretoken:'{{  csrf_token }}',
+				action: "post"
+			},
+			success:function(json){
+				console.log(json)
+				$('#cart_quantity').text(json.qty)
+				// dev_16
+				// location.reload();
+			},
+			error:function(e){
+				console.log(e)
+			}
+		});
+	});
+</script>
+
+{% endblock %}
