@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from cart.cart import Cart
 from store.models import Product
+from django.shortcuts import render
 
 def add_cart(request):
     cart = Cart(request)
@@ -41,3 +42,10 @@ def add_cart(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "잘못된 요청입니다."}, status=400)
+
+def summary_cart(request):
+    
+    # 카트객체 받아오기
+    cart = Cart(request)
+    
+    return render(request,"cart/summary.html",{"cart":cart})

@@ -1,6 +1,10 @@
+from decimal import Decimal
 from django.conf import settings
 from django.contrib.sessions.models import Session
 from django.contrib.sessions.backends.db import SessionStore
+
+from store.models import Product
+
 
 
 # dev_15
@@ -21,6 +25,27 @@ class Cart(): # 카트 클래스 생성
     def __len__(self):
         return sum(item["quantity"] for item in self.cart.values())
     
+    # dev_18
+    def __iter__(self):
+        product_ids = self.cart.keys() # ("1","2") 튜플형태로
+   
+        products = Product.objects.filter(id__in=product_ids)
+        
+        # self.cart = {
+        #     "1":{"quantity":7, "price":"3000.00", "product": <Product: 상품1>, total_price}, 
+        #     "2":{"quantity":1, "price":"5000.00", "product": <Product: 상품1>, }, 
+        # }
+        
+        for product in products:
+            self.cart[str(product.id)]["product"] = product
+            
+        for item in self.cart.values():
+            item["price"] = Decimal(item["price"])
+            item["total_price"] = item["price"] * item["quantity"]
+            
+            yield item # 제너레이터 문법
+            
+            
     def add(self, product, quantity=1, is_update=False):
         product_id = str(product.id)
         

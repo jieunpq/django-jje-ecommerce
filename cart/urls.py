@@ -8,5 +8,6 @@ from cart import views
 app_name = "cart"
 
 urlpatterns = [
-    path("add/", views.add_cart, name="add_cart") # dev_15
+    path("add/", views.add_cart, name="add_cart"), # dev_15
+    path("", views.summary_cart, name="summary_cart"), # dev_18
 ]
