@@ -18,11 +18,18 @@ def add_cart(request):
             product_qty = int(product_qty)
 
             product = get_object_or_404(Product, id=product_id)
+            
+            # 세션에 저장
             cart.add(product, product_qty)
+            
+            # 카트 전체 개수 가져오기
+            cart_qty = cart.__len__()
+            cart.decrypt_all_sessions()
 
             return JsonResponse({
                 "message": "장바구니에 추가되었습니다.",
-                "product_id": product_id
+                "product_id": product_id,
+                "qty": cart_qty   # 여기에 qty 포함해야 함!
             })
 
         except Exception as e:
