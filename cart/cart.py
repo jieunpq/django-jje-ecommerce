@@ -25,6 +25,12 @@ class Cart(): # 카트 클래스 생성
     def __len__(self):
         return sum(item["quantity"] for item in self.cart.values())
     
+    # dev_21
+    def get_product_total(self):
+        return sum(
+            item["quantity"] * Decimal(item["price"]) for item in self.cart.values()
+        )
+    
     # dev_18
     def __iter__(self):
         product_ids = self.cart.keys() # ("1","2") 튜플형태로
@@ -55,10 +61,16 @@ class Cart(): # 카트 클래스 생성
         # }
 
         if product_id not in self.cart:
-            self.cart[product_id] = {
-                "quantity": 0,
-                "price": str(product.price)
-            }
+            if product.is_sale:
+                self.cart[product_id] = {
+                    "quantity": 0,
+                    "price": str(product.sale_price)
+                }
+            else:
+                self.cart[product_id] = {
+                    "quantity": 0,
+                    "price": str(product.price)
+                }
 
         if is_update:
             self.cart[product_id]["quantity"] = quantity

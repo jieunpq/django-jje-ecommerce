@@ -12,8 +12,10 @@
 				<div class="fs-5 mb-5">
 					{% if product.is_sale %}
 					<span class="text-decoration-line-through">{{ product.price|floatformat:0|intcomma }}원</span>
+					<span>{{ product.sale_price|floatformat:0|intcomma }}원</span>
+					{% else %}
 					<span>{{ product.price|floatformat:0|intcomma }}원</span>
-					{% else %} {{ product.price|floatformat:0|intcomma }}원 {% endif %}
+					{% endif %}
 				</div>
 				<p class="lead">{{ product.description }}</p>
 				<div class="d-flex">
