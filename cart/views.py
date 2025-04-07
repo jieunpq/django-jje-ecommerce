@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from cart.cart import Cart
 from store.models import Product
 from django.shortcuts import render
+from django.contrib import messages #dev_22
 
 def add_cart(request):
     cart = Cart(request)
@@ -25,15 +26,19 @@ def add_cart(request):
             
             # 카트 전체 개수 가져오기
             cart_qty = cart.__len__()
+            response = JsonResponse({"qty": cart_qty})
             
             # 세션 확인 테스트
-            # cart.decrypt_all_sessions()
-
-            return JsonResponse({
-                "message": "장바구니에 추가되었습니다.",
-                "product_id": product_id,
-                "qty": cart_qty   # 여기에 qty 포함해야 함!
-            })
+            cart.decrypt_all_sessions()
+            
+            #dev_22
+            messages.error(request, "장바구니에 해당 상품이 추가되었습니다.")
+            return response
+            # return JsonResponse({
+            #     "message": "장바구니에 추가되었습니다.",
+            #     "product_id": product_id,
+            #     "qty": cart_qty   # 여기에 qty 포함해야 함!
+            # })
 
         except Exception as e:
             import traceback
@@ -62,6 +67,7 @@ def delete_cart(request):
         
         cart.remove(product)
     
+        messages.success(request, "장바구니에 해당 상품이 삭제되었습니다.")
         return JsonResponse({"삭제 상품": product_id})
 
 def update_cart(request):
@@ -76,4 +82,5 @@ def update_cart(request):
         # 카트 추가가 아닌 업데이트
         cart.add(product, product_qty, True)
         
+        messages.success(request, "장바구니에 해당 상품이 변경되었습니다.")
         return JsonResponse({"상품 업데이트": product_id})
