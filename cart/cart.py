@@ -3,6 +3,8 @@ from django.conf import settings
 from django.contrib.sessions.models import Session
 from django.contrib.sessions.backends.db import SessionStore
 
+import json
+
 # dev_18
 from store.models import Product
 # dev_23
@@ -83,19 +85,14 @@ class Cart(): # 카트 클래스 생성
         self.save()
         
         # dev_23
-        if self.request.user.is_authenticated: # 로그인인 되어 있는 유저라면
-            current_user = User.objects.filter(id=self.request.user.id)
-            # Convert {'3':1,} to {"3":1}
-            carty = str(self.cart)
-            carty = carty.replace("'", '"')
-            current_user.update(old_cart=str(carty))
+    def cart_to_db(self):
+        if self.request.user.is_authenticated:
+            cart_data = json.dumps(self.cart)
+            User.objects.filter(id=self.request.user.id).update(old_cart=cart_data)
             
-            
-        
-        
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
-        self.session.modified = True # 해당 세션을 DB에 저장
+        self.session.modified = True # 해당 세션을 DB에 저장    
         
     # dev_19
     def remove(self, product):
