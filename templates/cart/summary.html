@@ -87,7 +87,23 @@
                     </div>
                 {% endfor %}
                 <!--dev_21-->
-                <p class-"text-center">Total:{{ totals|floatformat:"0"|default_if_none:"0"|intcomma}}</p>
+                {% load humanize %}  {# 숫자에 쉼표 찍기 필터 #}
+
+                <div class="container mt-5">
+                <div class="row justify-content-end">
+                    <div class="col-md-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body text-end">
+                        <h5 class="card-title">총 결제금액</h5>
+                        <h3 class="fw-bold text-danger">
+                            {{ cart.get_product_total|floatformat:"0"|intcomma }}원
+                        </h3>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+
             {% else %}
                 <center>
                     <p>장바구니가 비어 있습니다.</p>

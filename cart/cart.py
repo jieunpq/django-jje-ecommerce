@@ -3,16 +3,19 @@ from django.conf import settings
 from django.contrib.sessions.models import Session
 from django.contrib.sessions.backends.db import SessionStore
 
+# dev_18
 from store.models import Product
+# dev_23
+from accounts.models import User
 
 
 
 # dev_15
 class Cart(): # 카트 클래스 생성
     
-    def __init__(self,request): # 객체 생성시 request 객체
-        
-        self.session = request.session # session 객체를 cart
+    def __init__(self, request):  # 객체 생성 시 request 객체 받음
+        self.request = request  # 🔧 이 줄 추가! → request를 인스턴스에 저장
+        self.session = request.session  # session 객체를 cart
         
         cart = self.session.get(settings.CART_SESSION_ID)
         
@@ -78,6 +81,17 @@ class Cart(): # 카트 클래스 생성
             self.cart[product_id]["quantity"] += quantity
 
         self.save()
+        
+        # dev_23
+        if self.request.user.is_authenticated: # 로그인인 되어 있는 유저라면
+            current_user = User.objects.filter(id=self.request.user.id)
+            # Convert {'3':1,} to {"3":1}
+            carty = str(self.cart)
+            carty = carty.replace("'", '"')
+            current_user.update(old_cart=str(carty))
+            
+            
+        
         
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
