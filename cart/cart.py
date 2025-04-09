@@ -104,6 +104,11 @@ class Cart(): # 카트 클래스 생성
         if product_id in self.cart:
             del self.cart[product_id]
             self.save()
+            
+    # dev_24
+    def get_cart(self):
+        return self.cart
+    
         
     def decrypt_all_sessions(self):
         """현재 DB에 저장된 모든 세션을 복호화하여 출력"""

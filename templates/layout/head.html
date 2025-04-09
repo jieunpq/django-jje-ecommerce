@@ -10,7 +10,14 @@
 	<!-- Bootstrap icons-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 	<!-- Core theme CSS (includes Bootstrap)-->
-	<link href='{% static "store/css/styles.css" %}' rel="stylesheet" />
+	<!-- Bootstrap CSS CDN 추가 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoYz1HI+5WgZlZ8aTG2yRjXcW3zsnrW9Bv1WTRiUuB7/24/" crossorigin="anonymous" />
+
+	<!-- Bootstrap Icons -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+	<!-- 너가 만든 스타일은 Bootstrap 뒤에 -->
+	<link href="{% static 'store/css/styles.css' %}" rel="stylesheet" />
 	<!-- Bootstrap core JS-->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- # dev_15 Jquery-->

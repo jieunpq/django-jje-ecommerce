@@ -1,6 +1,7 @@
 from django.contrib import admin
 from accounts.models import User
 
+
 # Register your models here.
 
 # Admin 페이지 등록방법 3가지
@@ -33,6 +34,8 @@ class UserAccountsAdmin(admin.ModelAdmin):
         "job",     
         "gender",                
     ]
+    
+
     
 # admin.site.register(User,UserAccountsAdmin)
 # 3. @admin.register 데코레이터 사용

@@ -4,13 +4,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", include("store.urls")), # dev_1
-    path('accounts/', include('accounts.urls', namespace='accounts')),  # ✅ 이 줄이 꼭 필요!
-    path('cart/', include("cart.urls")), # dev_15
-]
+   path("admin/", admin.site.urls),
+   path("", include("store.urls")), # dev_10
+   path("account/", include("accounts.urls")), # dev_7
+   path("cart/", include("cart.urls")), # dev_14
+   path("orders/", include("orders.urls")), # dev_24
+   ]
 
 # dev_2
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
-    

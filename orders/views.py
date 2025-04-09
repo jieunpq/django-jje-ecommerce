@@ -1,0 +1,45 @@
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from cart.cart import Cart
+from .models import Order, OrderItem
+from store.models import Product
+
+def create_orders(request):
+    if request.POST:
+        cart = Cart(request)
+        
+        if request.user.is_authenticated:
+            user = request.user
+            
+            # Order 생성 및 저장
+            create_order = Order(user=user)
+            create_order.amount_paid = cart.get_product_total()
+            create_order.save()
+            
+            order_id = create_order.pk
+            
+            for item in cart:
+                create_order_item = OrderItem(
+                    order_id=order_id,
+                    product_id=item["product"].id,
+                    quantity=item["quantity"],
+                    price=item["price"],
+                )
+                create_order_item.save()
+            
+            # 장바구니 비우기
+            cart_keys = list(cart.get_cart().keys())
+            for product_id in cart_keys:
+                product = Product.objects.get(id=product_id)
+                cart.remove(product)
+            
+            messages.success(request, "주문이 완료되었습니다.")
+            return redirect("/")  # 여기서 반드시 리턴 필요!
+        
+        else:
+            messages.success(request, "주문을 위해서는 로그인을 하셔야 합니다.")
+            return redirect("/")
+    
+    else:
+        messages.success(request, "잘못된 접근입니다.")
+        return redirect("/")

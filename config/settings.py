@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'store', #dev_1
     'accounts', #dev_9
     'cart', #dev_15
+    "orders", # dev_24
     
 ]
 

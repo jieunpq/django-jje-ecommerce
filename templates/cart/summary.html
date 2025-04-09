@@ -88,21 +88,20 @@
                 {% endfor %}
                 <!--dev_21-->
                 {% load humanize %}  {# 숫자에 쉼표 찍기 필터 #}
-
-                <div class="container mt-5">
-                <div class="row justify-content-end">
-                    <div class="col-md-4">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-body text-end">
-                        <h5 class="card-title">총 결제금액</h5>
-                        <h3 class="fw-bold text-danger">
-                            {{ cart.get_product_total|floatformat:"0"|intcomma }}원
-                        </h3>
-                        </div>
-                    </div>
-                    </div>
+                <div class="text-center mt-4">
+                    <p>총 결제 금액: {{ totals|floatformat:"0"|intcomma }}원</p>
+                    {# 주문 URL 연결도 주석 풀면 작동 가능 #}
+                    {# <a class="btn btn-success text-center" href="{% url 'payment:payment_process_order'%}">주문</a> #}
                 </div>
-                </div>
+                <!--dev_24-->
+                <form method="post" action="{% url 'orders:create_orders' %}">
+                    {% csrf_token %}
+                    <center>
+                        <button type="submit" class="btn btn-success text-center">주문</button>
+                    </center>
+                    <br/>
+                </form>
+            </div>
 
             {% else %}
                 <center>
