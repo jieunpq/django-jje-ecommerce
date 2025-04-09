@@ -5,7 +5,7 @@
 	</head>
 
 	<body class="d-flex flex-column min-vh-100">
-		{% block navbar %} {% include "layout/navbar.html" %} {% endblock %}
+		{% block navbar %} {% include "layout/navbar.html" %} {% endblock %} {% block header %}{% endblock %}
 
 		<main class="flex-grow-1">{% block content %}{% endblock %}</main>
 

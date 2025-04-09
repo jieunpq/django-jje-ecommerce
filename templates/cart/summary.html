@@ -8,16 +8,16 @@
     {% include "layout/navbar.html" %}
 {% endblock navi %}
 {% block header %}
-    <div class="d-flex flex-column vh-100 justify-content-between">
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">장바구니</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">장바구니 summary</p>
-                </div>
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">장바구니</h1>
+                <p class="lead fw-normal text-white-50 mb-0">장바구니 summary</p>
             </div>
-        </header>
-    {% endblock header %}
+        </div>
+    </header>
+{% endblock header %}
+
     {% block content %}
         <div class="container">
             {% if cart %}
@@ -93,15 +93,25 @@
                     {# 주문 URL 연결도 주석 풀면 작동 가능 #}
                     {# <a class="btn btn-success text-center" href="{% url 'payment:payment_process_order'%}">주문</a> #}
                 </div>
+                
                 <!--dev_24-->
-                <form method="post" action="{% url 'orders:create_orders' %}">
+                {% comment %} <form method="post" action="{% url 'orders:create_orders' %}">
                     {% csrf_token %}
                     <center>
                         <button type="submit" class="btn btn-success text-center">주문</button>
                     </center>
                     <br/>
                 </form>
-            </div>
+            </div> {% endcomment %}
+
+                <!--dev_25-->   
+                <div class="d-flex justify-content-end my-4">
+                    <a href="{% url 'orders:create_orders' %}" class="text-decoration-none">
+                        <button type="button" class="btn btn-primary px-4 py-2 rounded-pill shadow fw-bold">
+                            주문하기
+                        </button>
+                    </a>
+                </div>
 
             {% else %}
                 <center>
@@ -110,9 +120,8 @@
             {% endif %}
         </div>
     {% endblock content %}
-    {% block footer %}
-        {% include "layout/footer.html" %}
-    </div>
+{% block footer %}
+    {% include "layout/footer.html" %}
 {% endblock footer %}
 <!--dev_19-->
 {% block script %}
